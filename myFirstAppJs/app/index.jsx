@@ -7,7 +7,7 @@ export default function Home() {
     <View style={styles.container}>
       <Text className = 'text-4xl text-blue-400' >Aora!</Text>
       <StatusBar style="auto" />
-      <Link href='/profile' style = {{color : 'blue'}}>Go to Link</Link>
+      <Link href='/home' style = {{color : 'blue'}}>Go to Link</Link>
     </View>
   );
 }
