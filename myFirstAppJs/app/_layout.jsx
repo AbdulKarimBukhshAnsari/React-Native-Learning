@@ -35,7 +35,10 @@ const _layout = () => {
   return (
     <>
       <Stack>
-        <Stack.Screen name="index" options={{ title: "Home" , headerShown :false }} />
+        <Stack.Screen name="index" options={{ title: "Home" , headerShown :false }}
+         />
+        <Stack.Screen name="(auth)" options={{ title: "auth" , headerShown :false }}
+        />
       </Stack>
     </>
   );
