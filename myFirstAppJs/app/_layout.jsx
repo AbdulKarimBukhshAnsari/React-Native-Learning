@@ -4,6 +4,7 @@ import "../global.css";
 import { useFonts } from "expo-font";
 import { useEffect } from "react";
 import { SplashScreen, Stack } from "expo-router";
+import 'react-native-url-polyfill/auto'
 
 const _layout = () => {
   // This is used to Splash the screen while the resources are loading

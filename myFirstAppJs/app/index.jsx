@@ -9,7 +9,7 @@ export default function Home() {
     <SafeAreaView className = 'bg-primary h-full' >
       <ScrollView contentContainerStyle = {{height :' 100%'}}> 
         {/* ensure that if the containt is more than the size of the screen than it will allow  you to scroll  */}
-        <View className = "w-full  items-center min-h-[80vh] justify-center px-4   ">
+        <View className = "w-full  items-center min-h-[75vh] justify-center px-4   ">
           <Image 
           source = {images.logo}
            className = 'w-[130px] h-[84px]'

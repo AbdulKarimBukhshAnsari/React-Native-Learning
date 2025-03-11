@@ -1,10 +1,24 @@
 
-export const config = {
-    endPoint : 'https://cloud.appwrite.io/v1',
-    platForm : 'com.karim.aora',
-    projectId : '67ce57c9002bed183f2a',
-    dataBaseId : '67ce596d001ddd40eab9',
-    userCollectionId : '67ce598300306a1eb1e7',
-    videoCollectionId : '67ce59a60026fd092f2d',
-    storageId : '67ce65800019f0a350c7'
-};
+// Init your React Native SDK
+const client = new Client();
+
+
+client
+    .setEndpoint(config.endPoint) // Your Appwrite Endpoint
+    .setProject(config.projectId) // Your project ID
+    .setPlatform(config.platForm) // Your application ID or bundle ID.
+;
+
+
+const account = new Account(client);
+
+
+export const createUser = () =>{
+    account.create(ID.unique(), 'me@example.com', 'password', 'Jane Doe')
+    .then(function (response) {
+        console.log(response);
+    }, function (error) {
+        console.log(error);
+    });
+}
+
