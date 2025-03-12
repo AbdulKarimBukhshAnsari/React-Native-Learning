@@ -1,11 +1,11 @@
-import { View, Text, ScrollView, Image } from "react-native";
+import { View, Text, ScrollView, Image, Alert } from "react-native";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { images } from "../../constants";
 import FormField from "../../components/FormField";
 import { useState } from "react";
 import CustomButton from "../../components/CustomButton";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import { createUser } from "../../lib/appWriteConfig";
 
 const SignUp = () => {
@@ -17,9 +17,28 @@ const SignUp = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const submitSignin = () => {
-    createUser();
+  const submitSignin = async () => {
+    if (!form.email || !form.password || !form.userName) 
+      Alert.alert('Error : Kindly Fill all the fields .');
+    else{
+    try{
+      setIsSubmitting(true)
+      console.log('Signing uppp..')
+      const result = await  createUser(form.email , form.password  , form.userName);
+      
+      if(!result) throw Error ;
+
+      router.replace('/home')
+    }
+    catch(error){
+    Alert.alert('Error' , error.message)
+    }
+    finally{
+      setIsSubmitting(false);
+    }
+  ;    
   };
+}
 
   return (
     <SafeAreaView className="bg-primary h-full ">
@@ -44,7 +63,7 @@ const SignUp = () => {
           <FormField
             title="Email"
             value={form.email}
-            handleChangeText={(e) => setForm({ ...form, email: e })}
+            handleChangeText={(e) => setForm({ ...form, email: e})}
             otherStyles="mt-7"
             keyboardType="email-address"
           />
@@ -54,13 +73,12 @@ const SignUp = () => {
             value={form.password}
             handleChangeText={(e) => setForm({ ...form, password: e })}
             otherStyles="mt-8"
-            keyboardType="email-address"
           />
 
           <CustomButton
             handlePress={submitSignin}
             containerStyle="mt-8 w-full"
-            title="Sign in"
+            title="Sign up"
             isLoading={isSubmitting}
           />
 
