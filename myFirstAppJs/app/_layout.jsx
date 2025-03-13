@@ -3,11 +3,18 @@ import React from "react";
 import "../global.css";
 import { useFonts } from "expo-font";
 import { useEffect } from "react";
-import { SplashScreen, Stack } from "expo-router";
+import { Redirect, SplashScreen, Stack } from "expo-router";
 import 'react-native-url-polyfill/auto'
+import GlobalProvider, { useGlobalContext } from "../context/GlobalProvide";
 
 const _layout = () => {
   // This is used to Splash the screen while the resources are loading
+  const {isLoggedIn , isLoading } = useGlobalContext();
+  console.log(isLoggedIn);
+  console.log(isLoading)
+  if(!isLoading && isLoggedIn) {
+    return <Redirect href= '/home' />
+  }
   SplashScreen.preventAutoHideAsync();
   const [fontsLoaded, error] = useFonts({
     "Poppins-Black": require("../assets/fonts/Poppins-Black.ttf"),
@@ -35,12 +42,14 @@ const _layout = () => {
 
   return (
     <>
+      <GlobalProvider>
       <Stack>
         <Stack.Screen name="index" options={{ title: "Home" , headerShown :false }}
          />
         <Stack.Screen name="(auth)" options={{ title: "auth" , headerShown :false }}
         />
       </Stack>
+      </GlobalProvider>
     </>
   );
 };

@@ -1,5 +1,5 @@
 import { Alert } from 'react-native';
-import { Client , Account , ID, Avatars, Databases} from 'react-native-appwrite';
+import { Client , Account , ID, Avatars, Databases, Query} from 'react-native-appwrite';
 import 'react-native-url-polyfill/auto'
 
 export const config = {
@@ -69,7 +69,7 @@ export const createUser = async (email , password , username ) =>{
 }
 
 
-export async function signIn(email , password){
+export const  signIn = async (email , password) => {
     try{
         account.deleteSession('current'); // to delete the session 
         console.log('Session is Deleting ');
@@ -82,4 +82,28 @@ export async function signIn(email , password){
     }
 
 
-}
+};
+
+export const getCurrentUser = async () => {
+    try {
+        const currentAccount = await account.get();
+        if (!currentAccount) throw new Error("No current account found");
+
+        const currentUser = await databases.listDocuments(
+            config.dataBaseId,
+            config.userCollectionId,
+            [Query.equal('accountid', currentAccount.$id)]
+        );
+
+        if (!currentUser || currentUser.documents.length === 0) {
+            throw new Error("No user found in database");
+        }
+
+        return currentUser.documents[0]; // Return the first user document
+    } 
+    catch (error) {
+        console.error("Error fetching current user:", error);
+        return null; // Return null to indicate failure
+    }
+};
+
